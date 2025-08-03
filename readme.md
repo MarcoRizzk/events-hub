@@ -105,6 +105,7 @@ The containers watch the source folders (`backend/src`, `frontend/src`) so any c
 - Dates are sent and stored in ISO 8601 UTC strings.
 - Pagination defaults to `page=1&limit=20` when omitted.
 - using transaction for events and rsvps.
+- .env files uploaded for running the project easily.
 
 ---
 
