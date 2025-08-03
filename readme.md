@@ -213,7 +213,6 @@ Below is an expanded description of every REST endpoint outlined above. All endp
 
 > 📖 Not full Swagger/OpenAPI documentation is available once the backend is running at
 > `http://localhost:3000/api-docs`.
-
 > > 📖 Postman Collection for APIs testing
 > `https://www.postman.com/supply-saganist-64323845/my-workspace/collection/dfuorvd/events-hub?action=share&creator=35995034`.
 
