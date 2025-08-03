@@ -21,14 +21,21 @@ export default function MyEvents() {
   return (
     <div className="flex flex-col px-5 gap-4 pt-5">
       <div className="text-2xl font-bold">My Events</div>
+
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
-        {events.map((event) => (
-          <EventCard
-            key={event.id}
-            event={event}
-            onViewDetails={() => router.push(`/events/${event.id}`)}
-          />
-        ))}
+        {events.length === 0 ? (
+          <div className="text-center text-gray-600 py-10">
+            No events found.
+          </div>
+        ) : (
+          events.map((event) => (
+            <EventCard
+              key={event.id}
+              event={event}
+              onViewDetails={() => router.push(`/events/${event.id}`)}
+            />
+          ))
+        )}
       </div>
     </div>
   );

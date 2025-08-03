@@ -18,7 +18,7 @@ export default async function Home({ params }: PageProps) {
   const limit = 10;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/events?page=${page}&limit=${limit}`,
+    `${process.env.NEXT_PUBLIC_API_Server_BASE_URL}/events?page=${page}&limit=${limit}`,
     {
       next: { revalidate }, // ISR caching
     }
