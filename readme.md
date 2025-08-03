@@ -90,7 +90,7 @@ The containers watch the source folders (`backend/src`, `frontend/src`) so any c
 - CI/CD pipeline (GitHub Actions ➜ Docker registry ➜ cloud hosting).
 - adding payment gateway (e.g. Stripe).
 - Role-based access control and fine-grained permissions.
-- Adding real-time notifications (e.g. WebSockets).
+- Adding real-time data with event number of attendees in single event page & also real-time notifications for the event owner on rsvp. (e.g. WebSockets).
 - Adding email notifications (e.g. SendGrid).
 - Adding loaders for better experience.
 - Adding sorting for better experience.
@@ -104,9 +104,9 @@ The containers watch the source folders (`backend/src`, `frontend/src`) so any c
 - Minimal error handling for brevity – client should handle non-200 responses.
 - Dates are sent and stored in ISO 8601 UTC strings.
 - Pagination defaults to `page=1&limit=20` when omitted.
-- using transaction for events and rsvps.
+- Using transaction for events and rsvps.
 - .env files uploaded for running the project easily.
-
+- Get events request response cached for 100 seconds, and the same for get event by id.
 ---
 
 ## API Endpoint Documentation
