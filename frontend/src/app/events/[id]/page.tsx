@@ -9,6 +9,7 @@ import { useAuth } from "@app/lib/auth-context";
 import Spinner from "@app/components/spinner";
 import toastr from "react-hot-toast";
 import RsvpCard from "@app/components/rsvp-card";
+import { io, Socket } from "socket.io-client";
 
 export default function EventDetailsPage() {
   const params = useParams<{ id: string }>();
@@ -20,6 +21,7 @@ export default function EventDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [rsvpLoading, setRsvpLoading] = useState(false);
   const [rsvps, setRsvps] = useState<RsvpDto[]>([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     if (!eventId) return;
@@ -37,10 +39,36 @@ export default function EventDetailsPage() {
         .then((data) => setRsvps(data))
         .catch(() => toastr.error("Failed to load RSVPs"))
         .finally(() => setLoading(false));
-    } else {
-      return;
     }
   }, [eventId, isAuthenticated, user, event]);
+
+  useEffect(() => {
+    if (!eventId) return;
+
+    const s = io("http://localhost:3000/events", {
+      withCredentials: true,
+      transports: ["websocket"],
+    });
+
+    s.emit("joinEvent", eventId);
+
+    s.on(
+      "attendeesUpdated",
+      (data: { eventId: number; attendeesCount: number }) => {
+        if (data.eventId === eventId) {
+          setEvent((prev) =>
+            prev ? { ...prev, currentAttendees: data.attendeesCount } : prev
+          );
+        }
+      }
+    );
+
+    setSocket(s);
+
+    return () => {
+      s.disconnect();
+    };
+  }, [eventId]);
 
   const handleRsvp = async () => {
     if (!isAuthenticated) {
@@ -63,9 +91,8 @@ export default function EventDetailsPage() {
       setRsvpLoading(true);
       await eventsService.createRSVP(eventId);
       toastr.success("You have successfully RSVP’d!");
-      setEvent((prev) =>
-        prev ? { ...prev, currentAttendees: prev.currentAttendees + 1 } : prev
-      );
+      // No need to manually increment attendees here
+      // WebSocket will handle real-time update
     } catch (error) {
       toastr.error(
         (error as Error)?.message || "Failed to RSVP. Try again later."

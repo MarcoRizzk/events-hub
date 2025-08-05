@@ -2,14 +2,14 @@ import { Injectable, Inject, HttpException } from '@nestjs/common';
 import { EventsRepository } from './events.repository';
 import { CreateEventDto } from '@libs/dtos';
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
-import { Sequelize } from 'sequelize-typescript';
+import { EventsGateway } from './events.gateway';
 
 @Injectable()
 export class EventsService {
   constructor(
     private readonly eventsRepository: EventsRepository,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
-    private readonly sequelize: Sequelize,
+    private readonly eventsGateway: EventsGateway,
   ) {}
 
   async createEvent(event: CreateEventDto, userId: number) {
@@ -63,6 +63,11 @@ export class EventsService {
   }
 
   async updateEventCurrentAttendees(eventId: number, process: 'increment' | 'decrement') {
-    return await this.eventsRepository.updateEventCurrentAttendees(eventId, process);
+    const currentAttendees = await this.eventsRepository.updateEventCurrentAttendees(eventId, process);
+
+    // send webSocket update
+    this.eventsGateway.sendAttendeeUpdate(eventId, currentAttendees);
+
+    return currentAttendees;
   }
 }

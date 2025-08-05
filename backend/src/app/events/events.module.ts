@@ -5,10 +5,12 @@ import { EventsRepository } from './events.repository';
 import { Event } from '@libs/models';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { RsvpModule } from '@app/rsvp/rsvp.module';
+import { EventsGateway } from './events.gateway';
 
 @Module({
   imports: [SequelizeModule.forFeature([Event]), RsvpModule],
   controllers: [EventsController],
-  providers: [EventsService, EventsRepository],
+  providers: [EventsService, EventsRepository, EventsGateway],
+  exports: [EventsService],
 })
 export class EventsModule {}
