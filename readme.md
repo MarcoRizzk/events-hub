@@ -83,6 +83,12 @@ The containers watch the source folders (`backend/src`, `frontend/src`) so any c
 
   - Why: Open-source, reliable relational DB; strong JSON & indexing support.
 
+- WebSockets:
+
+  - Tech: Socket.io
+
+  - Why: Real-time event attendees count on rsvps creation or deletion.
+
 ## What I Would Improve With More Time
 
 - Add unit, integration & e2e test suites (Jest + Supertest + Playwright).
@@ -90,7 +96,7 @@ The containers watch the source folders (`backend/src`, `frontend/src`) so any c
 - CI/CD pipeline (GitHub Actions ➜ Docker registry ➜ cloud hosting).
 - adding payment gateway (e.g. Stripe).
 - Role-based access control and fine-grained permissions.
-- Adding real-time data with event number of attendees in single event page & also real-time notifications for the event owner on rsvp. (e.g. WebSockets).
+- Adding real-time notifications for the event owner on rsvp. (e.g. WebSockets).
 - Adding email notifications (e.g. SendGrid).
 - Adding loaders for better experience.
 - Adding sorting for better experience.
@@ -107,6 +113,7 @@ The containers watch the source folders (`backend/src`, `frontend/src`) so any c
 - Using transaction for events and rsvps.
 - .env files uploaded for running the project easily.
 - Get events request response cached for 100 seconds, and the same for get event by id.
+
 ---
 
 ## API Endpoint Documentation
@@ -213,9 +220,9 @@ Below is an expanded description of every REST endpoint outlined above. All endp
 
 > 📖 Not full Swagger/OpenAPI documentation is available once the backend is running at
 > `http://localhost:3000/api-docs`.
+>
 > > 📖 Postman Collection for APIs testing
-> `https://www.postman.com/supply-saganist-64323845/my-workspace/collection/dfuorvd/events-hub?action=share&creator=35995034`.
-
+> > `https://www.postman.com/supply-saganist-64323845/my-workspace/collection/dfuorvd/events-hub?action=share&creator=35995034`.
 
 ---
 
